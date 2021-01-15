@@ -1,0 +1,38 @@
+{% extends 'base.html' %}
+
+
+{% block cotent %}
+    <form method="POST" action="{% url 'creat' %}">
+    {% csrf_token %}
+      <div class="form-group">
+        <label for="exampleInputEmail1">输入句子，立刻生成藏头歌单</label>
+        <input type="search" name="juzi" class="form-control" >
+      </div>
+      <button type="submit" class="btn btn-primary">生成</button>
+    </form>
+    <br>
+{% endblock %}
+
+
+
+{% block result%}
+    {{ juzi }}:
+    <br>
+
+    <ul class="list-group list-group-flush">
+        <li class="list-group-item"></li>
+        {% for i in res %}
+            <li class="list-group-item"><a href="https://music.163.com/song?id={{ i.id }}" target="_blank">{{ i.name}}</a>-{{ i.alias.0 }}-{{ i.artists.0.name }} <a href="https://music.163.com/song/media/outer/url?id={{ i.id}}.mp3" , target="_blank">播放</a></li>
+        {% endfor %}
+        <li class="list-group-item"></li>
+
+    </ul>
+    <form action="/share" method="GET">
+        <input type="text" name="id" />
+        <input type="submit" value="分享" />
+    </form>
+    <a href="http://sns.qzone.qq.com/cgi-bin/qzshare/cgi_qzshare_onekey?url=blog.laphel.com&title=title&desc=thisisades&summary=summaryhere&site=www.laphel.com&pics={{IMAGE}}" target="_blank">qzone</a> </p> <p>
+    <a href="http://v.t.sina.com.cn/share/share.php?url=http://www.laphel.com&title='分享了一个歌单'" target="_blank">分享到新浪微博</a> </p> <p>
+    <a href="http://connect.qq.com/widget/shareqq/index.html?title=快来看看你的歌单&url=http://www.laphel.com&desc=看看这个歌单&pics=&site=优酷" target="_blank">分享给QQ好友</a> </p> <p>
+    <a href="http://sns.qzone.qq.com/cgi-bin/qzshare/cgi_qzshare_onekey?url=http://www.laphel.com" target="_blank">分享到QQ空间</a> </p> <p>
+{% endblock %}
